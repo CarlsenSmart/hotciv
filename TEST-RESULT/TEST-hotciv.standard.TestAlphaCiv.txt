@@ -1,7 +1,7 @@
 Testsuite: hotciv.standard.TestAlphaCiv
-Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0,037 sec
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0,054 sec
 
-Testcase: shouldBeRedAsStartingPlayer took 0 sec
+Testcase: shouldBeRedAsStartingPlayer took 0,022 sec
 	FAILED
 
 Expected: is <RED>
@@ -12,4 +12,4 @@ Expected: is <RED>
 	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
 	at hotciv.standard.TestAlphaCiv.shouldBeRedAsStartingPlayer(TestAlphaCiv.java:51)
 
-Testcase: shouldDefinetelyBeRemoved took 0,005 sec
+Testcase: shouldDefinetelyBeRemoved took 0,016 sec
