@@ -10,6 +10,9 @@ public class UnitImpl implements Unit {
     private String unitType;
     private Player owner;
     private int moveCount;
+    private int def = 0;
+    private int att = 0;
+    private int fortityDef = 0;
 
     public UnitImpl(String type, Player player) {
         unitType = type;
@@ -35,20 +38,19 @@ public class UnitImpl implements Unit {
 
     @Override
     public int getDefensiveStrength() {
-        int def = 0;
         switch(unitType){
-            case "archer": def = 3;
+            case "archer": def = 3 + fortityDef;
                 break;
             case "legion": def = 2;
                 break;
             case "settler": def = 3;
+                break;
         }
         return def;
     }
 
     @Override
     public int getAttackingStrength() {
-        int att = 0;
         switch(unitType){
             case "archer": att = 2;
                 break;
@@ -66,6 +68,19 @@ public class UnitImpl implements Unit {
 
     @Override
     public void restoreMoveCount() {
-        moveCount = 1;
+        if(fortityDef == 3)
+            moveCount = 0;
+        else
+            moveCount = 1;
+    }
+
+    public void fortify(boolean forti){
+        if(forti){
+            fortityDef = 3;
+            moveCount = 0;
+        } else {
+            fortityDef = 0;
+            moveCount = 1;
+        }
     }
 }

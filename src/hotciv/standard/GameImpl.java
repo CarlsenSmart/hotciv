@@ -1,8 +1,12 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
-import javafx.geometry.Pos;
+import hotciv.framework.variants.ActionStrategy;
+import hotciv.framework.variants.AgeStrategy;
+import hotciv.framework.variants.WinnerStrategy;
+import hotciv.framework.variants.WorldStrategy;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /** Skeleton implementation of HotCiv.
@@ -33,33 +37,26 @@ import java.util.HashMap;
 */
 
 public class GameImpl implements Game {
-    Player player;
-    HashMap<Position,City> cities = new HashMap<>();
-    HashMap<Position, TileImpl> tiles = new HashMap<>();
-    HashMap<Position, UnitImpl> units = new HashMap<>();
-    int wolrdAge;
+    private Player player;
+    private HashMap<Position,CityImpl> cities = new HashMap<>();
+    private HashMap<Position, TileImpl> tiles = new HashMap<>();
+    private HashMap<Position, UnitImpl> units = new HashMap<>();
+    private int worldAge;
+    private WinnerStrategy winnerStrategy;
+    private AgeStrategy ageStrategy;
+    private ActionStrategy actionStrategy;
+    private WorldStrategy worldStrategy;
 
-    public GameImpl(){
+    public GameImpl(WinnerStrategy ws, AgeStrategy as, ActionStrategy acs, WorldStrategy worldstr){
+        winnerStrategy = ws;
+        ageStrategy = as;
+        actionStrategy = acs;
+        worldStrategy = worldstr;
+
         player = Player.RED;
+        worldAge = -4000;
 
-        for(int i = 0; i < GameConstants.WORLDSIZE; i++){
-            for(int j = 0; j < GameConstants.WORLDSIZE; j++){
-                tiles.put(new Position(i,j), new TileImpl(GameConstants.PLAINS));
-            }
-        }
-
-        cities.put(new Position(1,1), new CityImpl(Player.RED));
-        cities.put(new Position(4,1), new CityImpl(Player.BLUE));
-
-        tiles.put(new Position(1,0), new TileImpl(GameConstants.OCEANS));
-        tiles.put(new Position(0,1), new TileImpl(GameConstants.HILLS));
-        tiles.put(new Position(2,2), new TileImpl(GameConstants.MOUNTAINS));
-
-        units.put(new Position(2,0), new UnitImpl(GameConstants.ARCHER, Player.RED));
-        units.put(new Position(3,2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
-        units.put(new Position(4,3), new UnitImpl(GameConstants.SETTLER, Player.RED));
-
-        wolrdAge = -4000;
+        worldStrategy.makeWorld(this);
 
     }
 
@@ -81,13 +78,12 @@ public class GameImpl implements Game {
         return player;
     }
     public Player getWinner() {
-        if(wolrdAge == -3000)
-            return Player.RED;
-        return null;
+        Player winner = winnerStrategy.calculateWinner(this);
+        return winner;
     }
 
     public int getAge() {
-        return wolrdAge;
+        return worldAge;
     }
 
     public boolean moveUnit( Position from, Position to ) {
@@ -154,7 +150,7 @@ public class GameImpl implements Game {
             cityProduceUnit(p, city);
         }
 
-        wolrdAge+= 100;
+        worldAge = ageStrategy.calculateAgeing(worldAge);
     }
 
     public void cityProduceUnit(Position p ,City c) {
@@ -207,5 +203,32 @@ public class GameImpl implements Game {
         if(city.getOwner() == player)
             city.setProduction(unitType);
     }
-    public void performUnitActionAt( Position p ) {}
+    public void performUnitActionAt( Position p ) {
+        actionStrategy.performAction(this, p);
+    }
+
+    public ArrayList<Position> getCitiesPosition() {
+        ArrayList<Position> citiesPosition = new ArrayList<>();
+        for(Position p : cities.keySet()){
+            citiesPosition.add(p);
+        }
+        return citiesPosition;
+    }
+
+    public HashMap<Position, UnitImpl> getUnits() {
+        return units;
+    }
+
+    public HashMap<Position, CityImpl> getCities(){
+        return cities;
+    }
+
+    public HashMap<Position, TileImpl> getTiles(){
+        return tiles;
+    }
+
+    public void fortify(UnitImpl unit, boolean fortify){
+        if(unit.getOwner().equals(getPlayerInTurn()))
+            unit.fortify(fortify);
+    }
 }
