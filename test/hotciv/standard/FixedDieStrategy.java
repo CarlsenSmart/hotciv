@@ -20,7 +20,9 @@ public class FixedDieStrategy implements DieDecisionStrategy {
         if(!hasJustedD1) {
             hasJustedD1 = true;
             return d1;
+        }else {
+            hasJustedD1 = false;
+            return d2;
         }
-        return d2;
     }
 }

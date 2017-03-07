@@ -3,6 +3,7 @@ package hotciv.standard;
 import hotciv.framework.Game;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
+import hotciv.standard.factories.ZetaCivFactory;
 import hotciv.standard.variants.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,8 +19,7 @@ public class TestZetaCiv {
 
     @Before
     public void setUp(){
-        game = new GameImpl(new ConquerAllSwitchToThreeWinsWinnerStrategy(), new LinearAgeStrategy(),
-                new NonActionStrategy(), new SimpleWorldStrategy());
+        game = new GameImpl(new ZetaCivFactory());
     }
 
     @Test

@@ -5,6 +5,7 @@ import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.framework.variants.AgeStrategy;
 import hotciv.framework.variants.WinnerStrategy;
+import hotciv.standard.factories.BetaCivFactory;
 import hotciv.standard.variants.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,8 +26,7 @@ public class TestBetaCiv {
     public void setUp(){
         as = new BetaSpecialAgeStrategy();
         ws = new ConquerAllCitiesWinnerStrategy();
-        game = new GameImpl(new ConquerAllCitiesWinnerStrategy(), new BetaSpecialAgeStrategy(),
-        new NonActionStrategy(), new SimpleWorldStrategy());
+        game = new GameImpl(new BetaCivFactory());
     }
 
     @Test

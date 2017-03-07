@@ -3,6 +3,7 @@ package hotciv.standard;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
+import hotciv.standard.factories.GammaCivFactory;
 import hotciv.standard.variants.Age3000BCWinnerStrategy;
 import hotciv.standard.variants.LinearAgeStrategy;
 import hotciv.standard.variants.SimpleWorldStrategy;
@@ -19,7 +20,7 @@ public class TestGammaCiv {
 
     @Before
     public void setUp(){
-        game = new GameImpl(new Age3000BCWinnerStrategy(), new LinearAgeStrategy(), new WithActionStrategy(), new SimpleWorldStrategy());
+        game = new GameImpl(new GammaCivFactory());
     }
 
     @Test

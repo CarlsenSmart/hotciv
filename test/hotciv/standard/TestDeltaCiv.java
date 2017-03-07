@@ -3,6 +3,7 @@ package hotciv.standard;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
+import hotciv.standard.factories.DeltaCivFactory;
 import hotciv.standard.variants.Age3000BCWinnerStrategy;
 import hotciv.standard.variants.DeltaWorldStrategy;
 import hotciv.standard.variants.LinearAgeStrategy;
@@ -19,8 +20,7 @@ public class TestDeltaCiv {
 
     @Before
     public void setUp(){
-        game = new GameImpl(new Age3000BCWinnerStrategy(), new LinearAgeStrategy(),
-                new NonActionStrategy(), new DeltaWorldStrategy());
+        game = new GameImpl(new DeltaCivFactory());
     }
 
     @Test

@@ -4,6 +4,7 @@ import hotciv.framework.*;
 
 import hotciv.framework.variants.AgeStrategy;
 import hotciv.framework.variants.WinnerStrategy;
+import hotciv.standard.factories.AlphaCivFactory;
 import hotciv.standard.variants.Age3000BCWinnerStrategy;
 import hotciv.standard.variants.LinearAgeStrategy;
 import hotciv.standard.variants.NonActionStrategy;
@@ -52,8 +53,7 @@ public class TestAlphaCiv {
     public void setUp() {
         as = new LinearAgeStrategy();
         ws = new Age3000BCWinnerStrategy();
-        game = new GameImpl(new Age3000BCWinnerStrategy(), new LinearAgeStrategy(),
-                new NonActionStrategy(), new SimpleWorldStrategy());
+        game = new GameImpl(new AlphaCivFactory());
     }
 
 

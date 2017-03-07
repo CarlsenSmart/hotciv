@@ -1,12 +1,11 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
-import hotciv.framework.variants.AttackOutcomeStrategy;
+import hotciv.standard.factories.EpsilonCivFactory;
 import hotciv.standard.variants.*;
 import org.junit.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import static org.junit.Assert.*;
@@ -23,8 +22,7 @@ public class TestEpsilonCiv {
 
     @Before
     public void setUp(){
-        game = new GameImpl(new ThreeWinsWinnerStrategy(), new LinearAgeStrategy(),
-                new NonActionStrategy(), new SimpleWorldStrategy());
+        game = new GameImpl(new EpsilonCivFactory(new FixedDieStrategy(1,1)));
         aos = new BattleOutcomeStrategy(new RandomDieStrategy());
         gameStub = new GameStubForBattleTesting();
     }
@@ -32,10 +30,13 @@ public class TestEpsilonCiv {
 
     @Test
     public void shouldGaveRedOneCountingWinAfterASuccessAttack(){
+        game = new GameImpl(new EpsilonCivFactory(new FixedDieStrategy(4,1)));
+        //move red archer right
         game.moveUnit(new Position(2,0), new Position(2,1));
 
         game.endOfTurn();
 
+        //move blue legion
         game.moveUnit(new Position(3,2), new Position(3,1));
 
         game.endOfTurn();
@@ -75,23 +76,24 @@ public class TestEpsilonCiv {
 
     @Test
     public void shouldBeRedWinAfterThreeSuccessAttack(){
-        //move archer
+        game = new GameImpl(new EpsilonCivFactory(new FixedDieStrategy(6,1)));
+        //move red archer right
         game.moveUnit(new Position(2,0), new Position(2,1));
 
         game.endOfTurn(); // blue's turn
 
-        //move legion
+        //move blue legion  left
         game.moveUnit(new Position(3,2), new Position(3,1));;
 
-        game.endOfTurn(); //red's turn
+        game.endOfTurn(); //red's turn. 6 prod.
 
-        // attacking with archer
+        // red archer move down and kills
         game.moveUnit(new Position(2,1), new Position(3,1));
-        //killing legion
+        //one dead
         assertThat(game.getRedWins(), is(1));
 
         game.endOfTurn();
-        game.endOfTurn(); // red's turn and blue have an archer in city
+        game.endOfTurn(); // red's turn and blue have an archer in city. 2 prod.
 
 
         // move archer left
@@ -103,9 +105,16 @@ public class TestEpsilonCiv {
         game.moveUnit(new Position(4,1), new Position(3,1));
 
         game.endOfTurn(); // red's turn
+        assertThat(game.getUnitAt(new Position(3,0)).getOwner(), is(Player.RED));
+        assertThat(game.getUnitAt(new Position(3,1)).getOwner(), is(Player.BLUE));
+        assertThat(game.getRedWins(), is(1));
+        assertThat(game.getUnitAt(new Position(3,0)).getMoveCount(), is(1));
+        assertThat(game.getPlayerInTurn(), is(Player.RED));
 
-        game.moveUnit(new Position(3,0), new Position(3,1));
-        //killing legion
+        boolean win = game.moveUnit(new Position(3,0), new Position(3,1));
+        assertTrue(win);
+        System.out.println(game.getRedWins());
+        //two dead
         assertThat(game.getRedWins(), is(2));
 
         game.endOfTurn();
@@ -181,7 +190,8 @@ public class TestEpsilonCiv {
         iter = BattleOutcomeStrategy.get8NeighborhoodIterator(center);
         neighborhood = convertIteration2List( iter );
 
-        assertThat(BattleOutcomeStrategy.combinedAttack(gameStub, new Position(2,2), Player.RED), is((2+3)*2));
+        assertThat(BattleOutcomeStrategy.combinedAttack(gameStub,
+                new Position(2,2), Player.RED), is((2+3)*2));
     }
 
     @Test
@@ -190,16 +200,15 @@ public class TestEpsilonCiv {
         iter = BattleOutcomeStrategy.get8NeighborhoodIterator(center);
         neighborhood = convertIteration2List( iter );
 
-        assertThat(BattleOutcomeStrategy.combinedDefense(gameStub, new Position(2,2), Player.RED), is((3+3)*2));
+        assertThat(BattleOutcomeStrategy.combinedDefense(gameStub,
+                new Position(2,2), Player.RED), is((3+3)*2));
     }
 
 
     // ikke så isoleret
     @Test
     public void shouldBeRedArcherWithFriendWinOverBlueLegionWhenD1Is4D2Is3AndPlainPlain(){
-        game = new GameImpl(new ThreeWinsWinnerStrategy(), new LinearAgeStrategy(),
-                new NonActionStrategy(), new SimpleWorldStrategy(),
-                new BattleOutcomeStrategy(new FixedDieStrategy(4, 3)));
+        game = new GameImpl(new EpsilonCivFactory(new FixedDieStrategy(4, 3)));
 
         game.moveUnit(new Position(2,0), new Position(3,1));
 
@@ -213,9 +222,7 @@ public class TestEpsilonCiv {
     }
     @Test
     public void shouldBeRedArcherWithFriendLooseOverBlueLegionWhenD1Is4D2Is3AndPlainCity(){
-        game = new GameImpl(new ThreeWinsWinnerStrategy(), new LinearAgeStrategy(),
-                new NonActionStrategy(), new SimpleWorldStrategy(),
-                new BattleOutcomeStrategy(new FixedDieStrategy(4,3)));
+        game = new GameImpl(new EpsilonCivFactory(new FixedDieStrategy(4,3)));
 
         game.moveUnit(new Position(2,0), new Position(3,1));
 
@@ -234,9 +241,7 @@ public class TestEpsilonCiv {
 
     @Test
     public void shouldBeRemovedWhenFailsTheAttack(){
-        game = new GameImpl(new ThreeWinsWinnerStrategy(), new LinearAgeStrategy(),
-                new NonActionStrategy(), new SimpleWorldStrategy(),
-                new BattleOutcomeStrategy(new FixedDieStrategy(1,2)));
+        game = new GameImpl(new EpsilonCivFactory(new FixedDieStrategy(1,2)));
 
         //archer with def 3, att 2
         game.moveUnit(new Position(2,0), new Position(3,1));

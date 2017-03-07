@@ -29,7 +29,9 @@ public class BattleOutcomeStrategy implements AttackOutcomeStrategy {
 
         int Die1 = dieDecisionStrategy.rollDie();
         int Die2 = dieDecisionStrategy.rollDie();
-        if(combinedAttack(game, from, attacker)*Die1 > combinedDefense(game, to, defender)*Die2){
+        int a = combinedAttack(game, from, attacker)*Die1;
+        int d = combinedDefense(game, to, defender)*Die2;
+        if(a > d){
             return true;
         }
         return false;

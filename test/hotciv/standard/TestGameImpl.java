@@ -3,6 +3,7 @@ package hotciv.standard;
 import hotciv.framework.*;
 import hotciv.standard.dummies.OneAgeStrategy;
 import hotciv.standard.dummies.RedWinsWinnerStrategy;
+import hotciv.standard.factories.GameImplFactory;
 import hotciv.standard.variants.NonActionStrategy;
 import hotciv.standard.variants.SimpleWorldStrategy;
 import org.junit.Before;
@@ -22,8 +23,7 @@ public class TestGameImpl {
     /** Fixture for alphaciv testing. */
     @Before
     public void setUp() {
-        game = new GameImpl(new RedWinsWinnerStrategy(), new OneAgeStrategy(),
-                new NonActionStrategy(), new SimpleWorldStrategy());
+        game = new GameImpl(new GameImplFactory());
     }
 
     @Test

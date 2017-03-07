@@ -2,6 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 import hotciv.framework.variants.*;
+import hotciv.standard.factories.GameImplFactory;
 import hotciv.standard.variants.MoverWinsAttackOutcomeStrategy;
 
 import java.util.ArrayList;
@@ -14,21 +15,23 @@ public class GameImpl implements Game {
     private HashMap<Position, TileImpl> tiles = new HashMap<>();
     private HashMap<Position, UnitImpl> units = new HashMap<>();
     private int worldAge;
+    private int redWins;
+    private int blueWins;
+    private int roundCount;
     private WinnerStrategy winnerStrategy;
     private AgeStrategy ageStrategy;
     private ActionStrategy actionStrategy;
     private WorldStrategy worldStrategy;
     private AttackOutcomeStrategy attackOutcomeStrategy;
-    private int redWins;
-    private int blueWins;
-    private int roundCount;
+    private GameFactory factory;
 
-    public GameImpl(WinnerStrategy ws, AgeStrategy as, ActionStrategy acs, WorldStrategy worldstr){
-        winnerStrategy = ws;
-        ageStrategy = as;
-        actionStrategy = acs;
-        worldStrategy = worldstr;
-        attackOutcomeStrategy = new MoverWinsAttackOutcomeStrategy();
+    public GameImpl(GameFactory gameFactory){
+        factory = gameFactory;
+        winnerStrategy = gameFactory.createWinnerStrategy();
+        ageStrategy = gameFactory.createAgeStrategy();
+        actionStrategy = gameFactory.createActionStrategy();
+        worldStrategy = gameFactory.createWorldStrategy();
+        attackOutcomeStrategy = gameFactory.createAttackStrategy();
 
         redWins = 0;
         blueWins = 0;
@@ -37,14 +40,8 @@ public class GameImpl implements Game {
         roundCount = 1;
 
         worldStrategy.makeWorld(this);
-
     }
 
-    public GameImpl(WinnerStrategy ws, AgeStrategy as, ActionStrategy acs,
-                    WorldStrategy worldstr, AttackOutcomeStrategy aos){
-        this(ws, as, acs, worldstr);
-        attackOutcomeStrategy = aos;
-    }
 
     public Tile getTileAt( Position p ) {
         Tile tile = tiles.get(p);
