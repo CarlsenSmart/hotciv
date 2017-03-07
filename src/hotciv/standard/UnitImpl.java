@@ -61,12 +61,12 @@ public class UnitImpl implements Unit {
         return att;
     }
 
-    @Override
+
     public void moved(){
         moveCount--;
     }
 
-    @Override
+
     public void restoreMoveCount() {
         if(fortityDef == 3)
             moveCount = 0;

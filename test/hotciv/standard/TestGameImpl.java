@@ -203,7 +203,7 @@ public class TestGameImpl {
 
     @Test
     public void shouldCitiesProduce6ProdPerRound(){
-        City cityRed = game.getCityAt(new Position(1,1));
+        CityImpl cityRed = (CityImpl) game.getCityAt(new Position(1,1));
         assertThat(cityRed.getTreasury(), is(0));
 
         endOfRound();
@@ -332,7 +332,7 @@ public class TestGameImpl {
 
     @Test
     public void shouldCost10ProdForArcher(){
-        City city = game.getCityAt(new Position(1,1));
+        CityImpl city = (CityImpl) game.getCityAt(new Position(1,1));
 
         assertThat(city.produceUnit(), is(false));
 
@@ -499,6 +499,19 @@ public class TestGameImpl {
     public void shouldBe4000BCWhenGameStart(){
         assertThat(game.getAge(), is(-4000));
     }
+
+    @Test
+    public void shouldBeBlueArcherAfterCityProducesUnit(){
+        assertThat(game.getUnitAt(new Position(4,1)), is(nullValue()));
+
+        game.endOfTurn();
+        game.endOfTurn(); // 6 production
+        game.endOfTurn();
+        game.endOfTurn(); // 2 production and archer in both cities
+
+        assertThat(game.getUnitAt(new Position(4,1)).getOwner(), is(Player.BLUE));
+    }
+
 
     @Test
     public void shouldAge100YearsPerRound(){

@@ -48,7 +48,6 @@ public class CityImpl implements City {
         treasury += addProd;
     }
 
-    @Override
     public boolean produceUnit() {
         boolean enoughProduction = false;
         int cost = 0;

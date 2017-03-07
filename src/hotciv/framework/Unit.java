@@ -64,7 +64,4 @@ public interface Unit {
      */
     public int getAttackingStrength();
 
-    public void moved();
-
-    public void restoreMoveCount();
 }

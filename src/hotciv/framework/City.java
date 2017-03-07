@@ -53,8 +53,4 @@ public interface City {
      */
     public String getWorkforceFocus();
 
-    public int getTreasury();
-
-    public boolean produceUnit();
-
 }

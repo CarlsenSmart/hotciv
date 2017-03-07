@@ -1,40 +1,12 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
-import hotciv.framework.variants.ActionStrategy;
-import hotciv.framework.variants.AgeStrategy;
-import hotciv.framework.variants.WinnerStrategy;
-import hotciv.framework.variants.WorldStrategy;
+import hotciv.framework.variants.*;
+import hotciv.standard.variants.MoverWinsAttackOutcomeStrategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/** Skeleton implementation of HotCiv.
- 
-   This source code is from the book 
-     "Flexible, Reliable Software:
-       Using Patterns and Agile Development"
-     published 2010 by CRC Press.
-   Author: 
-     Henrik B Christensen 
-     Department of Computer Science
-     Aarhus University
-   
-   Please visit http://www.baerbak.com/ for further information.
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
- 
-       http://www.apache.org/licenses/LICENSE-2.0
- 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
-*/
 
 public class GameImpl implements Game {
     private Player player;
@@ -46,18 +18,30 @@ public class GameImpl implements Game {
     private AgeStrategy ageStrategy;
     private ActionStrategy actionStrategy;
     private WorldStrategy worldStrategy;
+    private AttackOutcomeStrategy attackOutcomeStrategy;
+    private int redWins;
+    private int blueWins;
 
     public GameImpl(WinnerStrategy ws, AgeStrategy as, ActionStrategy acs, WorldStrategy worldstr){
         winnerStrategy = ws;
         ageStrategy = as;
         actionStrategy = acs;
         worldStrategy = worldstr;
+        attackOutcomeStrategy = new MoverWinsAttackOutcomeStrategy();
 
+        redWins = 0;
+        blueWins = 0;
         player = Player.RED;
         worldAge = -4000;
 
         worldStrategy.makeWorld(this);
 
+    }
+
+    public GameImpl(WinnerStrategy ws, AgeStrategy as, ActionStrategy acs,
+                    WorldStrategy worldstr, AttackOutcomeStrategy aos){
+        this(ws, as, acs, worldstr);
+        attackOutcomeStrategy = aos;
     }
 
     public Tile getTileAt( Position p ) {
@@ -101,7 +85,15 @@ public class GameImpl implements Game {
         if(!legalTile(tile)) return false;
 
         if(units.get(to) != null && !ownUnit(to, player)){
-            units.remove(to);
+            boolean won = attackOutcomeStrategy.attack(this, from, to);
+            if(won && player.equals(Player.RED)){
+                redWins++;
+            } else if(won)
+                blueWins++;
+            else
+                units.remove(from);
+            if(won) units.remove(to);
+
         }
 
         if(units.get(to) == null){
@@ -113,7 +105,7 @@ public class GameImpl implements Game {
             unit.moved();
 
             if(getCityAt(to) != null && !ownCity(to , player)){
-                CityImpl city = (CityImpl) cities.get(to);
+                CityImpl city =  cities.get(to);
                 city.setOwner(player);
             }
         }
@@ -145,7 +137,7 @@ public class GameImpl implements Game {
         }
 
         for(Position p : cities.keySet()){
-            CityImpl city = (CityImpl) cities.get(p);
+            CityImpl city = cities.get(p);
             city.accumulateProduction(6);
             cityProduceUnit(p, city);
         }
@@ -153,10 +145,10 @@ public class GameImpl implements Game {
         worldAge = ageStrategy.calculateAgeing(worldAge);
     }
 
-    public void cityProduceUnit(Position p ,City c) {
+    public void cityProduceUnit(Position p ,CityImpl city) {
+        //city's location
         int row = p.getRow();
         int col = p.getColumn();
-        Position newPos;
 
         for(int i = 0; i < 9; i++){
             switch(i) {
@@ -180,10 +172,10 @@ public class GameImpl implements Game {
                     break;
             }
 
-            newPos = new Position(row, col);
+            Position newPos = new Position(row, col);
             if(getUnitAt(newPos) == null && legalTile(getTileAt(newPos))){
-                if(c.produceUnit()){
-                    units.put(newPos, new UnitImpl(c.getProduction(), player));
+                if(city.produceUnit()){
+                    units.put(newPos, new UnitImpl(city.getProduction(), city.getOwner()));
                 }
             }
         }
@@ -199,7 +191,7 @@ public class GameImpl implements Game {
     public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
 
     public void changeProductionInCityAt( Position p, String unitType ) {
-        CityImpl city = (CityImpl) cities.get(p);
+        CityImpl city = cities.get(p);
         if(city.getOwner() == player)
             city.setProduction(unitType);
     }
@@ -231,4 +223,12 @@ public class GameImpl implements Game {
         if(unit.getOwner().equals(getPlayerInTurn()))
             unit.fortify(fortify);
     }
+
+    public int getRedWins(){
+        return redWins;
+    }
+    public int getBlueWins(){
+        return blueWins;
+    }
+
 }
