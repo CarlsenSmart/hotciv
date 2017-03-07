@@ -15,7 +15,7 @@ import static org.hamcrest.CoreMatchers.*;
  * Created by Yeilloz on 07-03-2017.
  */
 public class TestEpsilonCiv {
-    /* min egen test
+
 
 
     private GameImpl game;
@@ -24,9 +24,11 @@ public class TestEpsilonCiv {
     @Before
     public void setUp(){
         game = new GameImpl(new ThreeWinsWinnerStrategy(), new LinearAgeStrategy(),
-                new NonActionStrategy(), new SimpleWorldStrategy(), new BattleOutcomeStrategy());
-        aos = new BattleOutcomeStrategy();
+                new NonActionStrategy(), new SimpleWorldStrategy());
+        aos = new BattleOutcomeStrategy(new RandomDieStrategy());
+        gameStub = new GameStubForBattleTesting();
     }
+
 
     @Test
     public void shouldGaveRedOneCountingWinAfterASuccessAttack(){
@@ -117,6 +119,7 @@ public class TestEpsilonCiv {
         assertThat(game.getWinner(), is(Player.RED));
     }
 
+    /*
     //isolated unit test
     @Test
     public void shouldGiveATerrainFactorOf2InForrestOrHill(){
@@ -168,7 +171,7 @@ public class TestEpsilonCiv {
     public void shouldHave4AdjacentPoints(){
 
     }
- */
+        */
 
 
     //semi isolated test
@@ -178,7 +181,7 @@ public class TestEpsilonCiv {
         iter = BattleOutcomeStrategy.get8NeighborhoodIterator(center);
         neighborhood = convertIteration2List( iter );
 
-        assertThat(BattleOutcomeStrategy.combinedAttack(game, new Position(2,2), Player.RED), is((2+3)*2));
+        assertThat(BattleOutcomeStrategy.combinedAttack(gameStub, new Position(2,2), Player.RED), is((2+3)*2));
     }
 
     @Test
@@ -187,7 +190,7 @@ public class TestEpsilonCiv {
         iter = BattleOutcomeStrategy.get8NeighborhoodIterator(center);
         neighborhood = convertIteration2List( iter );
 
-        assertThat(BattleOutcomeStrategy.combinedDefense(game, new Position(2,2), Player.RED), is((3+3)*2));
+        assertThat(BattleOutcomeStrategy.combinedDefense(gameStub, new Position(2,2), Player.RED), is((3+3)*2));
     }
 
 
@@ -263,11 +266,8 @@ public class TestEpsilonCiv {
     private ArrayList<Position> neighborhood;
     private Position center, p;
 
-    Game game;
+    Game gameStub;
 
-    @Before public void setUp() {
-        game = new GameStubForBattleTesting();
-    }
 
     /** helper method to insert elements in an iterator into a list. */
     private ArrayList<Position> convertIteration2List(Iterator<Position> iter) {
@@ -338,31 +338,31 @@ public class TestEpsilonCiv {
 
     @Test public void shouldGiveCorrectTerrainFactors() {
         // plains have multiplier 1
-        assertEquals( 1, BattleOutcomeStrategy.getTerrainFactor( game, new Position(0,1)));
-        // hills have multiplier 2
-        assertEquals( 2, BattleOutcomeStrategy.getTerrainFactor( game, new Position(1,0)));
-        // forest have multiplier 2
-        assertEquals( 2, BattleOutcomeStrategy.getTerrainFactor( game, new Position(0,0)));
-        // cities have multiplier 3
-        assertEquals( 3, BattleOutcomeStrategy.getTerrainFactor( game, new Position(1,1)));
+        assertEquals( 1, BattleOutcomeStrategy.getTerrainFactor( gameStub, new Position(0,1)));
+        // hills have multiplier 2Stub
+        assertEquals( 2, BattleOutcomeStrategy.getTerrainFactor( gameStub, new Position(1,0)));
+        // forest have multiplier 2Stub
+        assertEquals( 2, BattleOutcomeStrategy.getTerrainFactor( gameStub, new Position(0,0)));
+        // cities have multiplier 3Stub
+        assertEquals( 3, BattleOutcomeStrategy.getTerrainFactor( gameStub, new Position(1,1)));
     }
 
     @Test public void shouldGiveSum1ForBlueAtP5_5() {
         assertEquals("Blue unit at (5,5) should get +1 support",
-                +1, BattleOutcomeStrategy.getFriendlySupport( game, new Position(5,5), Player.BLUE));
+                +1, BattleOutcomeStrategy.getFriendlySupport( gameStub, new Position(5,5), Player.BLUE));
     }
 
     @Test public void shouldGiveSum0ForBlueAtP2_4() {
         assertEquals("Blue unit at (2,4) should get +0 support",
-                +0, BattleOutcomeStrategy.getFriendlySupport( game, new Position(2,4), Player.BLUE));
+                +0, BattleOutcomeStrategy.getFriendlySupport( gameStub, new Position(2,4), Player.BLUE));
     }
     @Test public void shouldGiveSum2ForRedAtP2_4() {
         assertEquals("Red unit at (2,4) should get +2 support",
-                +2, BattleOutcomeStrategy.getFriendlySupport( game, new Position(2,4), Player.RED));
+                +2, BattleOutcomeStrategy.getFriendlySupport( gameStub, new Position(2,4), Player.RED));
     }
     @Test public void shouldGiveSum3ForRedAtP2_2() {
         assertEquals("Red unit at (2,2) should get +3 support",
-                +3, BattleOutcomeStrategy.getFriendlySupport( game, new Position(2,2), Player.RED));
+                +3, BattleOutcomeStrategy.getFriendlySupport( gameStub, new Position(2,2), Player.RED));
     }
 
 }

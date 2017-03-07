@@ -21,6 +21,7 @@ public class GameImpl implements Game {
     private AttackOutcomeStrategy attackOutcomeStrategy;
     private int redWins;
     private int blueWins;
+    private int roundCount;
 
     public GameImpl(WinnerStrategy ws, AgeStrategy as, ActionStrategy acs, WorldStrategy worldstr){
         winnerStrategy = ws;
@@ -33,6 +34,7 @@ public class GameImpl implements Game {
         blueWins = 0;
         player = Player.RED;
         worldAge = -4000;
+        roundCount = 1;
 
         worldStrategy.makeWorld(this);
 
@@ -143,6 +145,11 @@ public class GameImpl implements Game {
         }
 
         worldAge = ageStrategy.calculateAgeing(worldAge);
+        roundCount++;
+        if(getRoundCount()==21){
+            redWins = 0;
+            blueWins = 0;
+        }
     }
 
     public void cityProduceUnit(Position p ,CityImpl city) {
@@ -229,6 +236,10 @@ public class GameImpl implements Game {
     }
     public int getBlueWins(){
         return blueWins;
+    }
+
+    public int getRoundCount(){
+        return roundCount;
     }
 
 }

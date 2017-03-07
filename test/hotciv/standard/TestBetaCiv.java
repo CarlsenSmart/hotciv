@@ -93,15 +93,21 @@ public class TestBetaCiv {
     @Test
     public void shouldBeRedWinConqueredBluesCities(){
 
+        //no winner yet
         assertThat(game.getWinner(), is(nullValue()));
+        //move red archer to 3_0
         game.moveUnit(new Position(2,0), new Position(3,0));
 
         game.endOfTurn();
         game.endOfTurn();
 
+        //still no winner
         assertThat(game.getWinner(), is(nullValue()));
+
+        //archer attacks and win city
         game.moveUnit(new Position(3,0), new Position(4,1));
 
+        //We now have red as winner
         assertThat(game.getWinner(), is(Player.RED));
     }
 
