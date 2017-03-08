@@ -6,9 +6,9 @@ import hotciv.framework.variants.DieDecisionStrategy;
  * Created by Yeilloz on 07-03-2017.
  */
 public class FixedDieStrategy implements DieDecisionStrategy {
-    int d1;
-    int d2;
-    boolean hasJustedD1 = false;
+    private int d1;
+    private int d2;
+    private boolean hasJustedD1 = false;
 
     public FixedDieStrategy(int d1, int d2){
         this.d1 = d1;

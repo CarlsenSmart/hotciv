@@ -77,11 +77,13 @@ public class TestAlphaCiv {
     }
 
     //100% coverage achievement...men jeg har ikke rigtig taget hånd om dem.
+
     @Test
-    public void shouldBe0DefAndAttWhenProducingNotIncludeValidType(){
-        CityImpl city = new CityImpl(Player.RED);
-        city.setProduction("morgens");
-        assertThat(city.produceUnit(), is(true)); //falsk
+    public void shouldNotSelectUnitWhenNotValidTypeIntegration(){
+        City city = game.getCityAt(new Position(1,1));
+        assertThat(city.getProduction(), is(GameConstants.ARCHER));
+        game.changeProductionInCityAt(new Position(1,1), "morten");
+        assertThat(city.getProduction(), is(GameConstants.ARCHER));
     }
 
     @Test

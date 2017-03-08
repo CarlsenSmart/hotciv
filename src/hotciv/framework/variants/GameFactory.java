@@ -12,5 +12,7 @@ public interface GameFactory {
     public ActionStrategy createActionStrategy();
     public WorldStrategy createWorldStrategy();
     public AttackOutcomeStrategy createAttackStrategy();
+    public ChangeUnitInProductionStrategy createChangeUnitStrategy();
+    public ProduceUnitStrategy createProduceUnitStrategy();
 
 }

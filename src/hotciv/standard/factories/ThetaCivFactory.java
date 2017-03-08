@@ -1,30 +1,26 @@
 package hotciv.standard.factories;
 
 import hotciv.framework.variants.*;
-import hotciv.standard.dummies.OneAgeStrategy;
-import hotciv.standard.dummies.RedWinsWinnerStrategy;
-import hotciv.standard.variants.MoverWinsAttackOutcomeStrategy;
-import hotciv.standard.variants.NonActionStrategy;
-import hotciv.standard.variants.SimpleWorldStrategy;
-import hotciv.standard.variants.StandardSelectionOfUnitsStrategy;
+import hotciv.standard.variants.SelectionWithBombStrategy;
+import hotciv.standard.variants.*;
 
 /**
- * Created by Yeilloz on 07-03-2017.
+ * Created by Yeilloz on 08-03-2017.
  */
-public class GameImplFactory implements GameFactory {
+public class ThetaCivFactory implements GameFactory {
     @Override
     public WinnerStrategy createWinnerStrategy() {
-        return new RedWinsWinnerStrategy();
+        return new Age3000BCWinnerStrategy();
     }
 
     @Override
     public AgeStrategy createAgeStrategy() {
-        return new OneAgeStrategy();
+        return new LinearAgeStrategy();
     }
 
     @Override
     public ActionStrategy createActionStrategy() {
-        return new NonActionStrategy();
+        return new WithActionStrategy();
     }
 
     @Override
@@ -39,11 +35,13 @@ public class GameImplFactory implements GameFactory {
 
     @Override
     public ChangeUnitInProductionStrategy createChangeUnitStrategy() {
-        return new StandardSelectionOfUnitsStrategy();
+        return new SelectionWithBombStrategy();
     }
 
     @Override
     public ProduceUnitStrategy createProduceUnitStrategy() {
         return null;
     }
+
+
 }

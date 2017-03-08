@@ -23,6 +23,8 @@ public class GameImpl implements Game {
     private ActionStrategy actionStrategy;
     private WorldStrategy worldStrategy;
     private AttackOutcomeStrategy attackOutcomeStrategy;
+    private ProduceUnitStrategy produceUnitStrategy;
+    private ChangeUnitInProductionStrategy changeUnitInProductionStrategy;
     private GameFactory factory;
 
     public GameImpl(GameFactory gameFactory){
@@ -32,6 +34,8 @@ public class GameImpl implements Game {
         actionStrategy = gameFactory.createActionStrategy();
         worldStrategy = gameFactory.createWorldStrategy();
         attackOutcomeStrategy = gameFactory.createAttackStrategy();
+        produceUnitStrategy = gameFactory.createProduceUnitStrategy();
+        changeUnitInProductionStrategy = gameFactory.createChangeUnitStrategy();
 
         redWins = 0;
         blueWins = 0;
@@ -195,9 +199,12 @@ public class GameImpl implements Game {
     public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
 
     public void changeProductionInCityAt( Position p, String unitType ) {
+        boolean allowedUnitSelection = false;
         CityImpl city = cities.get(p);
         if(city.getOwner() == player)
-            city.setProduction(unitType);
+            allowedUnitSelection = changeUnitInProductionStrategy.changeUnitInProd(unitType);
+            if(allowedUnitSelection)
+                city.setProduction(unitType);
     }
     public void performUnitActionAt( Position p ) {
         actionStrategy.performAction(this, p);
@@ -237,6 +244,11 @@ public class GameImpl implements Game {
 
     public int getRoundCount(){
         return roundCount;
+    }
+
+    public HashMap<String, Integer> allowUnit(){
+
+        return null;
     }
 
 }

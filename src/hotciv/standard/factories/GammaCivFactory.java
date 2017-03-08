@@ -31,4 +31,14 @@ public class GammaCivFactory implements GameFactory {
     public AttackOutcomeStrategy createAttackStrategy() {
         return new MoverWinsAttackOutcomeStrategy();
     }
+
+    @Override
+    public ChangeUnitInProductionStrategy createChangeUnitStrategy() {
+        return new StandardSelectionOfUnitsStrategy();
+    }
+
+    @Override
+    public ProduceUnitStrategy createProduceUnitStrategy() {
+        return null;
+    }
 }

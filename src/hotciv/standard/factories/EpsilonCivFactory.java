@@ -41,4 +41,14 @@ public class EpsilonCivFactory implements GameFactory {
     public AttackOutcomeStrategy createAttackStrategy() {
         return new BattleOutcomeStrategy(dieDecisionStrategy);
     }
+
+    @Override
+    public ChangeUnitInProductionStrategy createChangeUnitStrategy() {
+        return new StandardSelectionOfUnitsStrategy();
+    }
+
+    @Override
+    public ProduceUnitStrategy createProduceUnitStrategy() {
+        return null;
+    }
 }

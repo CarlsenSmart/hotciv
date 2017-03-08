@@ -1,8 +1,11 @@
 package hotciv.standard;
 
+import hotciv.framework.variants.ChangeUnitInProductionStrategy;
 import hotciv.framework.City;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
+
+import java.util.HashMap;
 
 /**
  * Created by Yeilloz on 03-03-2017.
@@ -12,12 +15,18 @@ public class CityImpl implements City {
     private String unitProducing;
     private String workFocus;
     private int treasury;
+    private HashMap<String, Integer> units = new HashMap<>();
+
 
     public CityImpl(Player p){
         owner = p;
         unitProducing = GameConstants.ARCHER;
         workFocus = GameConstants.productionFocus;
         treasury = 0;
+    }
+
+    public CityImpl(Player player, ChangeUnitInProductionStrategy changeUnitInProductionStrategy){
+        this(player);
     }
 
     @Override
@@ -70,7 +79,7 @@ public class CityImpl implements City {
     }
 
     public void setProduction(String s) {
-        unitProducing = s;
+            unitProducing = s;
     }
 
     public void setOwner(Player player){

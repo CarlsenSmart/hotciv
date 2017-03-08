@@ -113,7 +113,6 @@ public class TestEpsilonCiv {
 
         boolean win = game.moveUnit(new Position(3,0), new Position(3,1));
         assertTrue(win);
-        System.out.println(game.getRedWins());
         //two dead
         assertThat(game.getRedWins(), is(2));
 
