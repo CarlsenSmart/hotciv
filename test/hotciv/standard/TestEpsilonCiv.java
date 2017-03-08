@@ -2,7 +2,8 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 import hotciv.standard.factories.EpsilonCivFactory;
-import hotciv.standard.variants.*;
+import hotciv.standard.variants.EpsilonCiv.BattleOutcomeStrategy;
+import hotciv.standard.variants.EpsilonCiv.RandomDieStrategy;
 import org.junit.*;
 
 import java.util.ArrayList;

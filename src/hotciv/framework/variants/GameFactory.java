@@ -1,7 +1,5 @@
 package hotciv.framework.variants;
 
-import hotciv.standard.variants.BattleOutcomeStrategy;
-
 /**
  * Created by Yeilloz on 07-03-2017.
  */

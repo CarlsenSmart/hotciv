@@ -1,4 +1,4 @@
-package hotciv.standard.variants;
+package hotciv.standard.variants.EpsilonCiv;
 
 import hotciv.framework.variants.DieDecisionStrategy;
 

@@ -1,4 +1,4 @@
-package hotciv.standard.variants;
+package hotciv.standard.variants.AlphaCiv;
 
 import hotciv.framework.Player;
 import hotciv.framework.variants.WinnerStrategy;

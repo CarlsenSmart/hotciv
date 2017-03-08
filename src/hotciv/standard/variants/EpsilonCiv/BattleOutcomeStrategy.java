@@ -1,4 +1,4 @@
-package hotciv.standard.variants;
+package hotciv.standard.variants.EpsilonCiv;
 
 import hotciv.framework.*;
 import hotciv.framework.variants.AttackOutcomeStrategy;

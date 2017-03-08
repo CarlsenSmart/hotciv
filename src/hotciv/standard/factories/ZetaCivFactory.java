@@ -1,7 +1,8 @@
 package hotciv.standard.factories;
 
 import hotciv.framework.variants.*;
-import hotciv.standard.variants.*;
+import hotciv.standard.variants.AlphaCiv.*;
+import hotciv.standard.variants.ZetaCiv.ConquerAllSwitchToThreeWinsWinnerStrategy;
 
 /**
  * Created by Yeilloz on 08-03-2017.
@@ -39,6 +40,6 @@ public class ZetaCivFactory implements GameFactory {
 
     @Override
     public ProduceUnitStrategy createProduceUnitStrategy() {
-        return null;
+        return new NormalUnitProductionStrategy();
     }
 }

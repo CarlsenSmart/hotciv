@@ -1,11 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
-import hotciv.standard.dummies.OneAgeStrategy;
-import hotciv.standard.dummies.RedWinsWinnerStrategy;
 import hotciv.standard.factories.GameImplFactory;
-import hotciv.standard.variants.NonActionStrategy;
-import hotciv.standard.variants.SimpleWorldStrategy;
 import org.junit.Before;
 import org.junit.Test;
 

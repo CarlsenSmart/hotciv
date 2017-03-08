@@ -1,7 +1,9 @@
 package hotciv.standard.factories;
 
 import hotciv.framework.variants.*;
-import hotciv.standard.variants.*;
+import hotciv.standard.variants.AlphaCiv.*;
+import hotciv.standard.variants.BetaCiv.BetaSpecialAgeStrategy;
+import hotciv.standard.variants.BetaCiv.ConquerAllCitiesWinnerStrategy;
 
 /**
  * Created by Yeilloz on 07-03-2017.
@@ -39,6 +41,6 @@ public class BetaCivFactory implements GameFactory {
 
     @Override
     public ProduceUnitStrategy createProduceUnitStrategy() {
-        return null;
+        return new NormalUnitProductionStrategy();
     }
 }

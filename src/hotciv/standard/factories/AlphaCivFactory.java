@@ -1,7 +1,7 @@
 package hotciv.standard.factories;
 
 import hotciv.framework.variants.*;
-import hotciv.standard.variants.*;
+import hotciv.standard.variants.AlphaCiv.*;
 
 /**
  * Created by Yeilloz on 07-03-2017.
@@ -39,6 +39,6 @@ public class AlphaCivFactory implements GameFactory {
 
     @Override
     public ProduceUnitStrategy createProduceUnitStrategy() {
-        return null;
+        return new NormalUnitProductionStrategy();
     }
 }

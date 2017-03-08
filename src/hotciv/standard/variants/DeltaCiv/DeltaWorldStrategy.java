@@ -1,4 +1,4 @@
-package hotciv.standard.variants;
+package hotciv.standard.variants.DeltaCiv;
 
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;

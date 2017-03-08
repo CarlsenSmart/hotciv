@@ -1,8 +1,9 @@
 package hotciv.standard.factories;
 
 import hotciv.framework.variants.*;
-import hotciv.standard.variants.SelectionWithBombStrategy;
-import hotciv.standard.variants.*;
+import hotciv.standard.variants.AlphaCiv.*;
+import hotciv.standard.variants.GammaCiv.WithActionStrategy;
+import hotciv.standard.variants.ThetaCiv.SelectionWithBombStrategy;
 
 /**
  * Created by Yeilloz on 08-03-2017.
@@ -40,7 +41,7 @@ public class ThetaCivFactory implements GameFactory {
 
     @Override
     public ProduceUnitStrategy createProduceUnitStrategy() {
-        return null;
+        return new NormalUnitProductionStrategy();
     }
 
 

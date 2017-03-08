@@ -3,10 +3,7 @@ package hotciv.standard.factories;
 import hotciv.framework.variants.*;
 import hotciv.standard.dummies.OneAgeStrategy;
 import hotciv.standard.dummies.RedWinsWinnerStrategy;
-import hotciv.standard.variants.MoverWinsAttackOutcomeStrategy;
-import hotciv.standard.variants.NonActionStrategy;
-import hotciv.standard.variants.SimpleWorldStrategy;
-import hotciv.standard.variants.StandardSelectionOfUnitsStrategy;
+import hotciv.standard.variants.AlphaCiv.*;
 
 /**
  * Created by Yeilloz on 07-03-2017.
@@ -44,6 +41,6 @@ public class GameImplFactory implements GameFactory {
 
     @Override
     public ProduceUnitStrategy createProduceUnitStrategy() {
-        return null;
+        return new NormalUnitProductionStrategy();
     }
 }

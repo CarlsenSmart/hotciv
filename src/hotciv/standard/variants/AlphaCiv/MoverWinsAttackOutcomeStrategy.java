@@ -1,4 +1,4 @@
-package hotciv.standard.variants;
+package hotciv.standard.variants.AlphaCiv;
 
 import hotciv.framework.Position;
 import hotciv.framework.variants.AttackOutcomeStrategy;

@@ -1,18 +1,22 @@
-package hotciv.standard.variants;
+package hotciv.standard.variants.AlphaCiv;
 
+import hotciv.framework.GameConstants;
 import hotciv.framework.variants.ChangeUnitInProductionStrategy;
+
+import java.util.HashMap;
 
 /**
  * Created by Yeilloz on 08-03-2017.
  */
-public class SelectionWithBombStrategy implements ChangeUnitInProductionStrategy {
+public class StandardSelectionOfUnitsStrategy implements ChangeUnitInProductionStrategy {
+
+
     @Override
     public boolean changeUnitInProd(String s) {
         switch (s){
             case "archer": return true;
             case "legion": return true;
             case "settler": return true;
-            case "bomb": return true;
         }
         return false;
     }

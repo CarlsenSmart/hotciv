@@ -1,7 +1,10 @@
 package hotciv.standard.factories;
 
 import hotciv.framework.variants.*;
-import hotciv.standard.variants.*;
+import hotciv.standard.variants.AlphaCiv.*;
+import hotciv.standard.variants.EpsilonCiv.BattleOutcomeStrategy;
+import hotciv.standard.variants.EpsilonCiv.RandomDieStrategy;
+import hotciv.standard.variants.EpsilonCiv.ThreeWinsWinnerStrategy;
 
 /**
  * Created by Yeilloz on 07-03-2017.
@@ -49,6 +52,6 @@ public class EpsilonCivFactory implements GameFactory {
 
     @Override
     public ProduceUnitStrategy createProduceUnitStrategy() {
-        return null;
+        return new NormalUnitProductionStrategy();
     }
 }

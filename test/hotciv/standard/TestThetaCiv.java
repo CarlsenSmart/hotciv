@@ -21,4 +21,10 @@ public class TestThetaCiv {
         assertThat(city.getProduction(), is("bomb"));
     }
 
+
+    @Test
+    public void shouldProduceBombAfter10Rounds(){
+
+    }
+
 }

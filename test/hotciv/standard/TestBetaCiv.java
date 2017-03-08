@@ -6,7 +6,8 @@ import hotciv.framework.Position;
 import hotciv.framework.variants.AgeStrategy;
 import hotciv.framework.variants.WinnerStrategy;
 import hotciv.standard.factories.BetaCivFactory;
-import hotciv.standard.variants.*;
+import hotciv.standard.variants.BetaCiv.BetaSpecialAgeStrategy;
+import hotciv.standard.variants.BetaCiv.ConquerAllCitiesWinnerStrategy;
 import org.junit.Before;
 import org.junit.Test;
 

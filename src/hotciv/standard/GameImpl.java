@@ -2,8 +2,6 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 import hotciv.framework.variants.*;
-import hotciv.standard.factories.GameImplFactory;
-import hotciv.standard.variants.MoverWinsAttackOutcomeStrategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -182,9 +180,8 @@ public class GameImpl implements Game {
 
             Position newPos = new Position(row, col);
             if(getUnitAt(newPos) == null && legalTile(getTileAt(newPos))){
-                if(city.produceUnit()){
-                    units.put(newPos, new UnitImpl(city.getProduction(), city.getOwner()));
-                }
+
+                produceUnitStrategy.produceUnit(this, city, newPos);
             }
         }
     }
