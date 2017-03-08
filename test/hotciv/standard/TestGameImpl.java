@@ -8,13 +8,14 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 /**
  * Created by Yeilloz on 05-03-2017.
  */
 public class TestGameImpl {
-    private Game game;
+    private GameImpl game;
 
     /** Fixture for alphaciv testing. */
     @Before
@@ -330,7 +331,8 @@ public class TestGameImpl {
     public void shouldCost10ProdForArcher(){
         CityImpl city = (CityImpl) game.getCityAt(new Position(1,1));
 
-        assertThat(city.produceUnit(), is(false));
+        game.cityProduceUnit(new Position(1,1), city);
+        assertNull(game.getUnitAt(new Position(1,1)));
 
         endOfRound();
         endOfRound();

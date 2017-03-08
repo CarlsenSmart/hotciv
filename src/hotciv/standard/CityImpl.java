@@ -57,26 +57,7 @@ public class CityImpl implements City {
         treasury += addProd;
     }
 
-    public boolean produceUnit() {
-        boolean enoughProduction = false;
-        int cost = 0;
 
-        switch (getProduction()){
-            case "archer": cost = 10;
-                break;
-            case "legion": cost = 15;
-                break;
-            case "settler": cost = 30;
-                break;
-        }
-
-        if(cost <= getTreasury()) {
-            enoughProduction = true;
-            accumulateProduction(-cost);
-        }
-
-        return enoughProduction;
-    }
 
     public void setProduction(String s) {
             unitProducing = s;

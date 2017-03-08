@@ -1,8 +1,9 @@
 package hotciv.standard.factories;
 
 import hotciv.framework.variants.*;
+import hotciv.standard.variants.ThetaCiv.WithBombActionStrategy;
+import hotciv.standard.variants.ThetaCiv.BombInProductionStrategy;
 import hotciv.standard.variants.AlphaCiv.*;
-import hotciv.standard.variants.GammaCiv.WithActionStrategy;
 import hotciv.standard.variants.ThetaCiv.SelectionWithBombStrategy;
 
 /**
@@ -21,7 +22,7 @@ public class ThetaCivFactory implements GameFactory {
 
     @Override
     public ActionStrategy createActionStrategy() {
-        return new WithActionStrategy();
+        return new WithBombActionStrategy();
     }
 
     @Override
@@ -41,7 +42,7 @@ public class ThetaCivFactory implements GameFactory {
 
     @Override
     public ProduceUnitStrategy createProduceUnitStrategy() {
-        return new NormalUnitProductionStrategy();
+        return new BombInProductionStrategy();
     }
 
 
