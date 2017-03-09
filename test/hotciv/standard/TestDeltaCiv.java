@@ -41,19 +41,19 @@ public class TestDeltaCiv {
 
     @Test
     public void shouldBeBlueLegionAt4_4(){
-        assertThat(game.getUnitAt(new Position(4,4)).getOwner(), is(Player.BLUE));
-        assertThat(game.getUnitAt(new Position(4,4)).getTypeString(), is(GameConstants.LEGION));
+        assertThat(game.getUnitAt(new Position(5,4)).getOwner(), is(Player.BLUE));
+        assertThat(game.getUnitAt(new Position(5,4)).getTypeString(), is(GameConstants.LEGION));
     }
 
     @Test
     public void shouldBeBlueSettlerAt5_5(){
-        assertThat(game.getUnitAt(new Position(5,5)).getOwner(), is(Player.BLUE));
-        assertThat(game.getUnitAt(new Position(5,5)).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(new Position(6,5)).getOwner(), is(Player.BLUE));
+        assertThat(game.getUnitAt(new Position(6,5)).getTypeString(), is(GameConstants.SETTLER));
     }
 
     @Test
     public void shouldBeBlueArcherAt3_8(){
-        assertThat(game.getUnitAt(new Position(3,8)).getOwner(), is(Player.BLUE));
-        assertThat(game.getUnitAt(new Position(3,8)).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(game.getUnitAt(new Position(4,8)).getOwner(), is(Player.BLUE));
+        assertThat(game.getUnitAt(new Position(4,8)).getTypeString(), is(GameConstants.ARCHER));
     }
 }

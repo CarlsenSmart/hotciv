@@ -243,9 +243,10 @@ public class GameImpl implements Game {
         return roundCount;
     }
 
-    public HashMap<String, Integer> allowUnit(){
 
-        return null;
+    public void reconfigure(GameFactory gameFactory){
+        factory = gameFactory;
     }
+
 
 }

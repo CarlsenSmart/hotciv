@@ -62,8 +62,8 @@ public class DeltaWorldStrategy implements WorldStrategy {
         cities.put(new Position(8,12), new CityImpl(Player.RED));
         cities.put(new Position(4,5), new CityImpl(Player.BLUE));
 
-        units.put(new Position(4,4), new UnitImpl(GameConstants.LEGION,Player.BLUE));
-        units.put(new Position(5,5), new UnitImpl(GameConstants.SETTLER,Player.BLUE));
-        units.put(new Position(3,8), new UnitImpl(GameConstants.ARCHER,Player.BLUE));
+        units.put(new Position(5,4), new UnitImpl(GameConstants.LEGION,Player.BLUE));
+        units.put(new Position(6,5), new UnitImpl(GameConstants.SETTLER,Player.BLUE));
+        units.put(new Position(4,8), new UnitImpl(GameConstants.ARCHER,Player.BLUE));
     }
 }
